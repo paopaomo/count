@@ -10,7 +10,14 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => MyHomePage(title: 'Flutter Demo Home Page'),
+        'new_route': (context) => NewRoute(),
+        'pass_value_route': (context) => RouterTestRoute(),
+        'tip_route': (context) => TipRoute(text: ModalRoute.of(context)
+            .settings.arguments)
+      },
     );
   }
 }
@@ -54,26 +61,28 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Text('open new route'),
               textColor: Colors.blue,
               onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) {
-                      return NewRoute();
-                    })
-                );
+                Navigator.pushNamed(context, 'new_route');
+//                Navigator.push(
+//                    context,
+//                    MaterialPageRoute(builder: (context) {
+//                      return NewRoute();
+//                    })
+//                );
               },
             ),
             FlatButton(
               child: Text('pass the value through the route'),
               textColor: Colors.red,
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return RouterTestRoute();
-                    }
-                  )
-                );
+                Navigator.pushNamed(context, 'pass_value_route');
+//                Navigator.push(
+//                  context,
+//                  MaterialPageRoute(
+//                    builder: (context) {
+//                      return RouterTestRoute();
+//                    }
+//                  )
+//                );
               },
             )
           ],
@@ -134,23 +143,30 @@ class TipRoute extends StatelessWidget {
 class RouterTestRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: RaisedButton(
-        onPressed: () async {
-          var result = await Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) {
-                return TipRoute(
-                    text: '我是提示xxx'
-                );
-              }
-            )
-          );
-          print('路由返回值: ${result}');
-        },
-        child: Text('打开提示页')
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('pass the value through the route')
       ),
+      body: Center(
+        child: RaisedButton(
+            onPressed: () async {
+//              var result = await Navigator.push(
+//                  context,
+//                  MaterialPageRoute(
+//                      builder: (context) {
+//                        return TipRoute(
+//                            text: '我是提示xxx'
+//                        );
+//                      }
+//                  )
+//              );
+            var result = Navigator.of(context).pushNamed('tip_route',
+                arguments: '我是提示xxx');
+              print('路由返回值: ${result}');
+            },
+            child: Text('打开提示页')
+        ),
+      )
     );
   }
 }
