@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
+import 'package:flutter/cupertino.dart';
 
 void main() => runApp(MyApp());
 
@@ -18,7 +19,8 @@ class MyApp extends StatelessWidget {
         'pass_value_route': (context) => RouterTestRoute(),
         'tip_route': (context) => TipRoute(text: ModalRoute.of(context)
             .settings.arguments),
-        'counter_route': (context) => CounterRoute()
+        'counter_route': (context) => CounterRoute(),
+        'cupertino_demo': (context) => CupertinoTestRoute()
       },
     );
   }
@@ -93,6 +95,13 @@ class _MyHomePageState extends State<MyHomePage> {
               textColor: Colors.blue,
               onPressed: () {
                 Navigator.pushNamed(context, 'counter_route');
+              },
+            ),
+            FlatButton(
+              child: Text('cupertino route'),
+              textColor: Colors.blue,
+              onPressed: () {
+                Navigator.pushNamed(context, 'cupertino_demo');
               },
             ),
           ],
@@ -269,5 +278,23 @@ class _CounterWidgetState extends State<CounterWidget> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     print('didChangeDependencies');
+  }
+}
+
+class CupertinoTestRoute extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CupertinoPageScaffold(
+        navigationBar: CupertinoNavigationBar(
+          middle: Text('Cupertino demo')
+        ),
+        child: Center(
+          child: CupertinoButton(
+            color: CupertinoColors.activeBlue,
+            child: Text('Press'),
+            onPressed: () {},
+          )
+        )
+    );
   }
 }
