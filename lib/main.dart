@@ -17,7 +17,8 @@ class MyApp extends StatelessWidget {
         'new_route': (context) => NewRoute(),
         'pass_value_route': (context) => RouterTestRoute(),
         'tip_route': (context) => TipRoute(text: ModalRoute.of(context)
-            .settings.arguments)
+            .settings.arguments),
+        'counter': (context) => CounterWidget()
       },
     );
   }
@@ -86,7 +87,14 @@ class _MyHomePageState extends State<MyHomePage> {
 //                );
               },
             ),
-            RandomWordsWidget()
+            RandomWordsWidget(),
+            FlatButton(
+              child: Text('counter'),
+              textColor: Colors.blue,
+              onPressed: () {
+                Navigator.pushNamed(context, 'counter');
+              },
+            ),
           ],
         ),
       ),
@@ -181,5 +189,71 @@ class RandomWordsWidget extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: Text(wordPair.toString())
     );
+  }
+}
+
+class CounterWidget extends StatefulWidget {
+  const CounterWidget({
+    Key key,
+    this.initValue: 0
+  });
+
+  final int initValue;
+
+  @override
+  _CounterWidgetState createState() => new _CounterWidgetState();
+}
+
+class _CounterWidgetState extends State<CounterWidget> {
+  int _counter;
+
+  @override
+  void initState() {
+    super.initState();
+    _counter = widget.initValue;
+    print('initState');
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    print('build');
+    return Scaffold(
+      body: Center(
+        child: FlatButton(
+          child: Text('$_counter'),
+          onPressed: () => setState(() => ++_counter),
+        )
+      )
+    );
+  }
+
+  @override
+  void didUpdateWidget(CounterWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    print('didUpdateWidget');
+  }
+
+  @override
+  void deactivate() {
+    super.deactivate();
+    print('deactivate');
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    print('dispose');
+  }
+
+  @override
+  void reassemble() {
+    super.reassemble();
+    print('reassemble');
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    print('didChangeDependencies');
   }
 }
