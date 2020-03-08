@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
         'pass_value_route': (context) => RouterTestRoute(),
         'tip_route': (context) => TipRoute(text: ModalRoute.of(context)
             .settings.arguments),
-        'counter': (context) => CounterWidget()
+        'counter_route': (context) => CounterRoute()
       },
     );
   }
@@ -89,10 +89,10 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             RandomWordsWidget(),
             FlatButton(
-              child: Text('counter'),
+              child: Text('counter route'),
               textColor: Colors.blue,
               onPressed: () {
-                Navigator.pushNamed(context, 'counter');
+                Navigator.pushNamed(context, 'counter_route');
               },
             ),
           ],
@@ -188,6 +188,20 @@ class RandomWordsWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Text(wordPair.toString())
+    );
+  }
+}
+
+class CounterRoute extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('counter'),
+      ),
+      body: Center(
+        child: CounterWidget()
+      )
     );
   }
 }
