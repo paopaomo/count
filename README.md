@@ -1,4 +1,4 @@
-# counter
+# flutter demo
 
 A new Flutter project.
 
